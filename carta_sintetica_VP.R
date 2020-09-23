@@ -177,7 +177,7 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
     #Promedio esperado total del tamaño de muestra En
     En<-pc*En0+(1-pc)*Endelta
     
-    if (En<=nmax){
+    if (En<=nmax & ATS1>=0){
       return(round(ATS1,3) )
     }else{
       return(100000000)}
