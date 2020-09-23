@@ -49,7 +49,7 @@ cruzar_individuos <- function(parental_1,
     descendencia[herencia_parent_2] <- parental_2[herencia_parent_2]
 
     
-    if ((descendencia[1] >=descendencia[2]) || (descendencia[4] < descendencia[5]) || (descendencia[6] < descendencia[7]) ){ 
+    if ((descendencia[7]>=descendencia[8])||(descendencia[1]<descendencia[2])||(descendencia[3]<descendencia[4])||(descendencia[5]<descendencia[6])){ 
       descendencia <- parental_1
     }
     
