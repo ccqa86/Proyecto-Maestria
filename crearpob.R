@@ -96,13 +96,16 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,des, limite_inf =
   
       # Para cada posición, se genera un valor aleatorio dentro del rango permitido
       # para cada variable.
-      individuo[1] <- as.integer(runif(1, min=1, max=nmax-1))
-      individuo[2] <- as.integer(runif(1, min=individuo[1]+1, max=nmax+1))
-      individuo[3] <- sample(limite_inf[3]:limite_sup[3], 1, replace = FALSE)
-      individuo[4] <- runif(1, min=miu, max=miu+4*des)
-      individuo[5] <- runif(1, min=miu, max=individuo[4])
-      individuo[6] <- runif(1, min=0.1, max=20)
-      individuo[7] <- runif(1, min=0.1, max=individuo[6])
+      individuo[1] <- runif(1, min=miu, max=miu+4*des)
+      individuo[2] <- runif(1, min=miu, max=individuo[1])
+      individuo[3] <- runif(1, min=miu, max=miu+4*des)
+      individuo[4] <- runif(1, min=miu, max=individuo[3])
+      individuo[5] <- runif(1, min=0.1, max=20)
+      individuo[6] <- runif(1, min=0.1, max=individuo[5])
+      individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+      individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+      individuo[9] <- sample(limite_inf[3]:limite_sup[3], 1, replace = FALSE)
+
     }
     # Se añade el nuevo individuo a la población.
     poblacion[i, ] <- individuo
