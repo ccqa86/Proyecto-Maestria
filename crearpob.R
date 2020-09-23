@@ -104,7 +104,7 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,des, limite_inf =
       individuo[6] <- runif(1, min=0.1, max=individuo[5])
       individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
       individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
-      individuo[9] <- sample(limite_inf[3]:limite_sup[3], 1, replace = FALSE)
+      individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
 
     }
     # Se añade el nuevo individuo a la población.
