@@ -98,7 +98,7 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,des, limite_inf =
       # para cada variable.
       individuo[1] <- runif(1, min=miu, max=miu+4*des)
       individuo[2] <- runif(1, min=miu, max=individuo[1])
-      individuo[3] <- runif(1, min=miu, max=miu+4*des)
+      individuo[3] <- runif(1, min=miu, max=individuo[1])
       individuo[4] <- runif(1, min=miu, max=individuo[3])
       individuo[5] <- runif(1, min=0.1, max=20)
       individuo[6] <- runif(1, min=0.1, max=individuo[5])
