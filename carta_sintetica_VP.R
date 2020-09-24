@@ -21,13 +21,15 @@ source('C:/Users/Carmen C/Documents/R/Proyecto-Maestria/ag.R')
 # nmax = Tamaño de la muestra máximo
 
 ##########################
-#k1<-7.1368
-#k2<-1.9826
-#hL<-6.5031
-#hs<-3.3638
-#ns<-12
-#nL<-14
-#m<-9
+k1<-3.366
+k2<-1.721
+w1<-2.111
+w2<-1.523
+h1<-17.918
+h2<-2.428
+n1<-6
+n2<-8
+m<-6
 ##########################
 
 ##Se construye la función objetivo del modelo matemático: ATS1
@@ -69,10 +71,10 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   pil<-array(0,c(1,m-1))
   tao<-370.4
   nmax<-14
-  rho_adv<-phi*psi/sqrt((psi+((1-psi)/n2))*(psi+((1-psi)/n1)))
-  rho_cen<-phi*psi/sqrt((psi+((1-psi)/n1))*(psi+((1-psi)/n2)))
-  rho1<-(n1*phi*psi)/((n1*psi)+1-psi)
-  rho2<-(n2*phi*psi)/((n2*psi)+1-psi)
+  rho_adv<-((phi^h2)*psi)/sqrt((psi+((1-psi)/n2))*(psi+((1-psi)/n1)))
+  rho_cen<-((phi^h1)*psi)/sqrt((psi+((1-psi)/n1))*(psi+((1-psi)/n2)))
+  rho1<-(n1*(phi^h1)*psi)/((n1*psi)+1-psi)
+  rho2<-(n2*(phi^h2)*psi)/((n2*psi)+1-psi)
   
   pc<-runif(1)
   
@@ -81,10 +83,8 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   #Probabilidades con delta = 0
   p010<-1-pnorm(k1/sqrt((1+(n1-1)*rho1)))+pnorm(-k1/sqrt((1+(n1-1)*rho1)))
   p011<-1-pnorm(k2/sqrt((1+(n2-1)*rho2)))+pnorm(-k2/sqrt((1+(n2-1)*rho2)))
-  p020<-pnorm(k1/sqrt((1+(n1-1)*rho_cen)))-pnorm(w1/sqrt((1+(n1-1)*rho_cen)))
-          +pnorm(-w1/sqrt((1+(n1-1)*rho_cen)))-pnorm(-k1/sqrt((1+(n1-1)*rho_cen)))
-  p021<-pnorm(k2/sqrt((1+(n2-1)*rho2)))-pnorm(w2/sqrt((1+(n2-1)*rho2)))
-          +pnorm(-w2/sqrt((1+(n2-1)*rho2)))-pnorm(-k2/sqrt((1+(n2-1)*rho2)))
+  p020<-pnorm(k1/sqrt((1+(n1-1)*rho_cen)))-pnorm(w1/sqrt((1+(n1-1)*rho_cen)))+pnorm(-w1/sqrt((1+(n1-1)*rho_cen)))-pnorm(-k1/sqrt((1+(n1-1)*rho_cen)))
+  p021<-pnorm(k2/sqrt((1+(n2-1)*rho2)))-pnorm(w2/sqrt((1+(n2-1)*rho2)))+pnorm(-w2/sqrt((1+(n2-1)*rho2)))-pnorm(-k2/sqrt((1+(n2-1)*rho2)))
   p030<-pnorm(w1/sqrt((1+(n1-1)*rho1)))-pnorm(-w1/sqrt((1+(n1-1)*rho1)))
   p031<-pnorm(w2/sqrt((1+(n2-1)*rho_adv)))-pnorm(-w2/sqrt((1+(n2-1)*rho_adv)))
   
@@ -100,13 +100,13 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
     P0[l,m+2]<-p020+p010
     P0[l,l+1]<-p030
   }
-  
+
   #Cálculo de ARL0
   Q0<-P0[0:m+1,0:m+1]
   I0<-diag(m+1)
   inv0<-(I0-Q0)
   ARL0<-t(q)%*%solve(inv0,tol = 1e-40)%*%one
-  
+
   #Probabilidades de estado-estable con delta = 0
   pi00<-(1-p030)/(1-p030+p031)
   pi0l<-array(0,c(1,m-1))
@@ -123,25 +123,15 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   
   #Cálculo de ATS0
   ATS0<-ARL0*Eh0
-  
+
   if (ATS0 >= tao){
     #Probabilidades con delta > 0
-    p10<-1-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-          +pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-    p11<-1-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-          +pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-    p20<-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
-          -pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
-          +pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
-          -pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
-    p21<-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-          -pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-          +pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-          -pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-    p30<-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-          -pnorm(-(-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-    p31<-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))
-          -pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))
+    p10<-1-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))+pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
+    p11<-1-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))+pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
+    p20<-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))+pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))-pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
+    p21<-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))+pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))-pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
+    p30<-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))-pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
+    p31<-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))-pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))
     
     #Matriz de probabilidades de transición P
     P[m+1,1]<-p20
@@ -150,16 +140,17 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
     P[m+2,m+2]<-1
     P[1,2]<-p31
     P[1,m+2]<-p21+p11
-    for (l in 2:m){
-      P[l,m+2]<-p20+p10
-      P[l,l+1]<-p30
+    for (p in 2:m){
+      P[p,m+2]<-p20+p10
+      P[p,p+1]<-p30
     }
     
+
     #Cálculo de ARL1
     Q<-P[0:m+1,0:m+1]
     inv<-(I-Q)
     ARL1<-t(q)%*%solve(inv,tol = 1e-40)%*%one
-    
+
     #Probabilidades de estado-estable con delta > 0
     pi0<-(1-p30)/(1-p30+p31)
     for (l in 1:m-1){
@@ -186,7 +177,7 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
 }
 
 #funcion(ns, nL, m, k1, k2, hL, hs)
-#funcion(k1, k2, w1, w2, h1, h2, n1, n2, m)
+funcion(k1, k2, w1, w2, h1, h2, n1, n2, m)
 
 ##Aplicación del algoritmo genético a la función objetivo
 
