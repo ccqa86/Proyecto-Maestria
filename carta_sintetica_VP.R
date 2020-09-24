@@ -21,43 +21,42 @@ source('C:/Users/Carmen C/Documents/R/Proyecto-Maestria/ag.R')
 # nmax = Tamaño de la muestra máximo
 
 ##########################
-k1<-3.366
-k2<-1.721
-w1<-2.111
-w2<-1.523
-h1<-17.918
-h2<-2.428
-n1<-6
-n2<-8
-m<-6
+#k1<-3.196
+#k2<-2.078
+#w1<-2.385
+#w2<-0.437
+#h1<-14.061
+#h2<-6.100
+#n1<-13
+#n2<-14
+#m<-17
 ##########################
 
 ##Se construye la función objetivo del modelo matemático: ATS1
-
-#Niveles de psi a evaluar
-psi<-0.1
-#psi<-c(0.1, 0.5, 0.9)
-
-#Niveles de phi a evaluar
-phi<-0.2
-#phi<-c(0.2, 0.4, 0.6, 0.8, 0.99)
-
-#Cambios de la media a evaluar
-delta<-0.1
-#delta<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
-
-nmax<-14
+nmax<-15
 miu<-0
 des<-1
 
 #deseado <- 200
 #a<-1:600
 #index <-1
-#while(170>deseado || deseado>196 || (results$mejor_individuo_global[2]-results$mejor_individuo_global[1])>3){
+#while(160>deseado || deseado>180 || (results$mejor_individuo_global[2]-results$mejor_individuo_global[1])>3){
 
 #set.seed(a[index])
 #index=index+1
-set.seed(2)
+set.seed(31)
+
+#Niveles de psi a evaluar
+psi<-0.1
+#psi<-c(0.1, 0.5)
+
+#Niveles de phi a evaluar
+phi<-0.2
+#phi<-c(0.2, 0.4, 0.6, 0.8, 0.99)
+
+#Cambios de la media a evaluar
+#delta<-0.3
+delta<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
 
 funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   
@@ -144,7 +143,6 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
       P[p,m+2]<-p20+p10
       P[p,p+1]<-p30
     }
-    
 
     #Cálculo de ARL1
     Q<-P[0:m+1,0:m+1]
@@ -176,8 +174,7 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
     return(1000000000)}
 }
 
-#funcion(ns, nL, m, k1, k2, hL, hs)
-funcion(k1, k2, w1, w2, h1, h2, n1, n2, m)
+#funcion(k1, k2, w1, w2, h1, h2, n1, n2, m)
 
 ##Aplicación del algoritmo genético a la función objetivo
 
@@ -185,7 +182,7 @@ n_poblacion <- 100
 n_variables <- 9
 limite_inf <- c(0.1,0.1,0.1,0.1,0.1,0.1,as.integer(1),as.integer(1),as.integer(1))
 limite_sup <- c(miu+4*des,10,miu+4*des,10,20,10,as.integer(nmax),as.integer(nmax),as.integer(30))
-n_generaciones <- 50
+n_generaciones <- 60
 
 results <- optimizar_ga(funcion_objetivo = funcion, n_variables = n_variables, nmax, miu, des, 
                         optimizacion = "minimizar", limite_inf = limite_inf,
@@ -203,5 +200,5 @@ ggplot(data = results$df_resultados,
   geom_point() +
   labs(title = "Evolución del fitness a lo largo de las generaciones") + 
   theme_bw()
-
+#}
 #print(a[index])
