@@ -341,7 +341,7 @@ optimizar_ga <- function(
     diferencia_abs    = diferencia_abs
   )
   
-  resultados <- list(
+  resultados <- data.frame(
     mejor_individuo_global = mejor_individuo_global,
     mejor_valor_global     = mejor_valor_global,
     mejor_fitness_por_generacion   = resultados_fitness,
