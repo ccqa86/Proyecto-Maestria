@@ -33,30 +33,30 @@ source('C:/Users/Carmen C/Documents/R/Proyecto-Maestria/ag.R')
 ##########################
 
 ##Se construye la función objetivo del modelo matemático: ATS1
-nmax<-15
-miu<-0
-des<-1
+nmax<-31
+miu<-250
+des<-0.05
 
 #deseado <- 200
 #a<-1:600
 #index <-1
-#while(160>deseado || deseado>180 || (results$mejor_individuo_global[2]-results$mejor_individuo_global[1])>3){
+#while(170>deseado || deseado>190 || (results$mejor_individuo_global[2]-results$mejor_individuo_global[1])>3){
 
 #set.seed(a[index])
 #index=index+1
-set.seed(31)
+set.seed(43)
 
 #Niveles de psi a evaluar
 psi<-0.1
 #psi<-c(0.1, 0.5)
 
 #Niveles de phi a evaluar
-phi<-0.2
+phi<-0.4
 #phi<-c(0.2, 0.4, 0.6, 0.8, 0.99)
 
 #Cambios de la media a evaluar
-#delta<-0.3
-delta<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
+delta<-0.3
+#delta<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
 
 funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   
@@ -80,12 +80,12 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
   ##Se calcula el ATS0 para construir la restricción ATS0 >= 370.4
   
   #Probabilidades con delta = 0
-  p010<-1-pnorm(k1/sqrt((1+(n1-1)*rho1)))+pnorm(-k1/sqrt((1+(n1-1)*rho1)))
-  p011<-1-pnorm(k2/sqrt((1+(n2-1)*rho2)))+pnorm(-k2/sqrt((1+(n2-1)*rho2)))
-  p020<-pnorm(k1/sqrt((1+(n1-1)*rho_cen)))-pnorm(w1/sqrt((1+(n1-1)*rho_cen)))+pnorm(-w1/sqrt((1+(n1-1)*rho_cen)))-pnorm(-k1/sqrt((1+(n1-1)*rho_cen)))
-  p021<-pnorm(k2/sqrt((1+(n2-1)*rho2)))-pnorm(w2/sqrt((1+(n2-1)*rho2)))+pnorm(-w2/sqrt((1+(n2-1)*rho2)))-pnorm(-k2/sqrt((1+(n2-1)*rho2)))
-  p030<-pnorm(w1/sqrt((1+(n1-1)*rho1)))-pnorm(-w1/sqrt((1+(n1-1)*rho1)))
-  p031<-pnorm(w2/sqrt((1+(n2-1)*rho_adv)))-pnorm(-w2/sqrt((1+(n2-1)*rho_adv)))
+  p010<-1-pnorm(k1/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)+pnorm(-k1/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)
+  p011<-1-pnorm(k2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)+pnorm(-k2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)
+  p020<-pnorm(k1/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)-pnorm(w1/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)+pnorm(-w1/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)-pnorm(-k1/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)
+  p021<-pnorm(k2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)-pnorm(w2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)+pnorm(-w2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)-pnorm(-k2/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)
+  p030<-pnorm(w1/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)-pnorm(-w1/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)
+  p031<-pnorm(w2/sqrt((1+(n2-1)*rho_adv)),mean=miu,sd=des)-pnorm(-w2/sqrt((1+(n2-1)*rho_adv)),mean=miu,sd=des)
   
   #Matriz de transición P0
   P0<-array(0,c(m+2,m+2))
@@ -125,12 +125,12 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
 
   if (ATS0 >= tao){
     #Probabilidades con delta > 0
-    p10<-1-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))+pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-    p11<-1-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))+pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-    p20<-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))+pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))-pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)))
-    p21<-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))+pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))-pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)))
-    p30<-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))-pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)))
-    p31<-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))-pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)))
+    p10<-1-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)+pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)
+    p11<-1-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)+pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)
+    p20<-pnorm((k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)+pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)-pnorm((-k1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho_cen)),mean=miu,sd=des)
+    p21<-pnorm((k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)+pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)-pnorm((-k2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho2)),mean=miu,sd=des)
+    p30<-pnorm((w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)-pnorm((-w1-(sqrt(n1)*delta))/sqrt((1+(n1-1)*rho1)),mean=miu,sd=des)
+    p31<-pnorm((w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)),mean=miu,sd=des)-pnorm((-w2-(sqrt(n2)*delta))/sqrt((1+(n2-1)*rho_adv)),mean=miu,sd=des)
     
     #Matriz de probabilidades de transición P
     P[m+1,1]<-p20
@@ -178,11 +178,11 @@ funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
 
 ##Aplicación del algoritmo genético a la función objetivo
 
-n_poblacion <- 100
+n_poblacion <- 300
 n_variables <- 9
-limite_inf <- c(0.1,0.1,0.1,0.1,0.1,0.1,as.integer(1),as.integer(1),as.integer(1))
-limite_sup <- c(miu+4*des,10,miu+4*des,10,20,10,as.integer(nmax),as.integer(nmax),as.integer(30))
-n_generaciones <- 60
+limite_inf <- c(miu+0.1,miu+0.1,miu+0.1,miu+0.1,miu+0.1,miu+0.1,as.integer(1),as.integer(1),as.integer(1))
+limite_sup <- c(miu+4*des,(miu+4*des)*0.8,miu+4*des,(miu+4*des)*0.8,20,10,as.integer(nmax),as.integer(nmax),as.integer(30))
+n_generaciones <- 75
 
 results <- optimizar_ga(funcion_objetivo = funcion, n_variables = n_variables, nmax, miu, des, 
                         optimizacion = "minimizar", limite_inf = limite_inf,
@@ -190,15 +190,17 @@ results <- optimizar_ga(funcion_objetivo = funcion, n_variables = n_variables, n
                         n_generaciones = n_generaciones, distribucion = "aleatoria",
                         verbose = 1, metodo_seleccion = "tournament")
 
-head(results$df_resultados)
+#head(results$df_resultados)
 results$mejor_individuo_global
-results$mejor_valor_global
-#deseado<-results$mejor_valor_global
+#results$mejor_valor_global
+
 ggplot(data = results$df_resultados,
        aes(x = generacion, y = fitness)) +
   geom_line(aes(group = 1)) +
   geom_point() +
   labs(title = "Evolución del fitness a lo largo de las generaciones") + 
   theme_bw()
+
+#deseado<-results$mejor_valor_global
 #}
 #print(a[index])
