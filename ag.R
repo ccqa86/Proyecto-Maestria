@@ -18,7 +18,7 @@ optimizar_ga <- function(
   n_poblacion        = 20,
   n_generaciones     = 50,
   elitismo           = 0.1,
-  prob_mut           = 0.01,
+  prob_mut           = 0.5,
   distribucion       = "aleatoria",
   media_distribucion = 1,
   sd_distribucion    = 1,
@@ -341,7 +341,7 @@ optimizar_ga <- function(
     diferencia_abs    = diferencia_abs
   )
   
-  resultados <- data.frame(
+  resultados <- list(
     mejor_individuo_global = mejor_individuo_global,
     mejor_valor_global     = mejor_valor_global,
     mejor_fitness_por_generacion   = resultados_fitness,
