@@ -76,7 +76,7 @@ mutar_individuo <- function(individuo, limite_inf, limite_sup,
     }
   }
   
-  if ((individuo[7]>=individuo[8])||(individuo[1]<individuo[2])||(individuo[3]<individuo[4])||(individuo[5]<individuo[6])){ 
+  if ((individuo[7]>=individuo[8])||(individuo[1]<=individuo[2])||(individuo[3]<individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]<individuo[6])){ 
     individuo <- individuo1
   }
   
