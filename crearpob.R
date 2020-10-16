@@ -1,4 +1,4 @@
-crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,des, limite_inf = NULL,
+crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, limite_inf = NULL,
                             limite_sup = NULL, verbose = TRUE) {
   
   
@@ -85,28 +85,99 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,des, limite_inf =
   # ----------------------------------------------------------------------------
   # Matriz donde almacenar los individuos generados.
   poblacion <- matrix(data = NA, nrow = n_poblacion, ncol = n_variables)
-  
-  # Bucle para crear cada individuo.
+
+    # Bucle para crear cada individuo.
   for (i in 1:n_poblacion) {
    
     # Se crea un vector de NA que representa el individuo.
     individuo <- rep(NA, times = n_variables)
-    
-    for (j in 1:n_variables) {
-  
+    if (escenario==1){
+
+        # Para cada posición, se genera un valor aleatorio dentro del rango permitido
+        # para cada variable.
+        individuo[1] <- runif(1, min=miu, max=miu+4*des)
+        individuo[2] <- runif(1, min=miu, max=individuo[1])
+        individuo[3] <- runif(1, min=miu, max=individuo[1])
+        individuo[4] <- runif(1, min=miu, max=individuo[2])
+        individuo[5] <- runif(1, min=0.1, max=20)
+        individuo[6] <- runif(1, min=0.1, max=individuo[5])
+        individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+        individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+        individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
+        
+    }else if (escenario==2){
+    # Escenario 2 para la carta VSSIWL
+
+        # Para cada posición, se genera un valor aleatorio dentro del rango permitido
+        # para cada variable.
+        individuo[1] <- runif(1, min=miu, max=miu+4*des)
+        individuo[2] <- individuo[1]
+        individuo[3] <- runif(1, min=miu, max=individuo[1])
+        individuo[4] <- runif(1, min=miu, max=individuo[2])
+        individuo[5] <- runif(1, min=0.1, max=20)
+        individuo[6] <- runif(1, min=0.1, max=individuo[5])
+        individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+        individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+        individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
+        
+    }else if (escenario==3){
+      #Escenario 3 para la carta VSSI
+      
+        # Para cada posición, se genera un valor aleatorio dentro del rango permitido
+        # para cada variable.
+        individuo[1] <- runif(1, min=miu, max=miu+4*des)
+        individuo[2] <- individuo[1]
+        individuo[3] <- runif(1, min=miu, max=individuo[1])
+        individuo[4] <- individuo[3]
+        individuo[5] <- runif(1, min=0.1, max=20)
+        individuo[6] <- runif(1, min=0.1, max=individuo[5])
+        individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+        individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+        individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
+    }else if (escenario==4){
+      #Escenario 4 para la carta VSI
+
+        # Para cada posición, se genera un valor aleatorio dentro del rango permitido
+        # para cada variable.
+        individuo[1] <- runif(1, min=miu, max=miu+4*des)
+        individuo[2] <- individuo[1]
+        individuo[3] <- runif(1, min=miu, max=individuo[1])
+        individuo[4] <- individuo[3]
+        individuo[5] <- runif(1, min=0.1, max=20)
+        individuo[6] <- runif(1, min=0.1, max=individuo[5])
+        individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+        individuo[8] <- individuo[7]
+        individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
+    }else if (escenario==5){
+      #Escenario 5 para la carta VSS
+        
+        # Para cada posición, se genera un valor aleatorio dentro del rango permitido
+        # para cada variable.
+        individuo[1] <- runif(1, min=miu, max=miu+4*des)
+        individuo[2] <- individuo[1]
+        individuo[3] <- runif(1, min=miu, max=individuo[1])
+        individuo[4] <- individuo[3]
+        individuo[5] <- runif(1, min=0.1, max=20)
+        individuo[6] <- individuo[5]
+        individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
+        individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+        individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
+    }else{
+      #Escenario 6 para la carta X tradicional
+      
       # Para cada posición, se genera un valor aleatorio dentro del rango permitido
       # para cada variable.
       individuo[1] <- runif(1, min=miu, max=miu+4*des)
-      individuo[2] <- runif(1, min=miu, max=individuo[1])
+      individuo[2] <- individuo[1]
       individuo[3] <- runif(1, min=miu, max=individuo[1])
-      individuo[4] <- runif(1, min=miu, max=individuo[2])
+      individuo[4] <- individuo[3]
       individuo[5] <- runif(1, min=0.1, max=20)
-      individuo[6] <- runif(1, min=0.1, max=individuo[5])
+      individuo[6] <- individuo[5]
       individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
-      individuo[8] <- as.integer(runif(1, min=individuo[7]+1, max=nmax+1))
+      individuo[8] <- individuo[7]
       individuo[9] <- sample(limite_inf[9]:limite_sup[9], 1, replace = FALSE)
-
     }
+
     # Se añade el nuevo individuo a la población.
     poblacion[i, ] <- individuo
   }
