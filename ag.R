@@ -11,6 +11,7 @@ optimizar_ga <- function(
   n_variables,
   nmax,
   miu,
+  escenario,
   des,
   optimizacion,
   limite_inf         = NULL,
@@ -34,6 +35,7 @@ optimizar_ga <- function(
   
   #prob_mut_total=c(0.05,0.1,0.15,0.2,0.25)
   #a<-1
+  
   
   # ARGUMENTOS
   # =============================================================================
@@ -158,6 +160,7 @@ optimizar_ga <- function(
   
   # ITERACIÓN DE POBLACIONES
   # ----------------------------------------------------------------------------
+
   for (i in 1:n_generaciones) {
     if (verbose %in% c(1,2)) {
       cat("-------------------", "\n")
@@ -173,6 +176,7 @@ optimizar_ga <- function(
         n_variables = n_variables,
         nmax        = nmax,
         miu         = miu,
+        escenario   = escenario,
         des         = des,
         limite_inf  = limite_inf,
         limite_sup  = limite_sup,
@@ -249,7 +253,8 @@ optimizar_ga <- function(
         parental_1   = parental_1,
         parental_2   = parental_2,
         metodo_cruce = metodo_cruce,
-        verbose      = verbose %in% c(2)
+        verbose      = verbose %in% c(2),
+        escenario    = escenario
       )
       # Mutar la descendencia
       descendencia <- mutar_individuo(
@@ -262,7 +267,8 @@ optimizar_ga <- function(
         sd_distribucion    = sd_distribucion,
         min_distribucion   = min_distribucion,
         max_distribucion   = max_distribucion,
-        verbose            = verbose %in% c(2)
+        verbose            = verbose %in% c(2),
+        escenario          = escenario
       )
       
       nueva_poblacion[j, ] <- descendencia
