@@ -1,7 +1,8 @@
 cruzar_individuos <- function(parental_1,
                               parental_2,
                               metodo_cruce = "uniforme",
-                              verbose = TRUE) {
+                              verbose = TRUE,
+                              escenario = escenario) {
   # Esta función devuelve un individuo resultado de cruzar dos individuos
   # parentales con el método de cruzamiento uniforme o punto simple.
   #
@@ -48,11 +49,33 @@ cruzar_individuos <- function(parental_1,
     descendencia[herencia_parent_1] <- parental_1[herencia_parent_1]
     descendencia[herencia_parent_2] <- parental_2[herencia_parent_2]
 
-    
-    if ((descendencia[7]>=descendencia[8])||(descendencia[1]<=descendencia[2])||(descendencia[3]<descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]<descendencia[6])){ 
-      descendencia <- parental_1
+    if (escenario==1){
+      if ((descendencia[7]>=descendencia[8])||(descendencia[1]<=descendencia[2])||(descendencia[3]<descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]<descendencia[6])){ 
+        descendencia <- parental_1
+      }
+    }else if (escenario==2){
+      if ((descendencia[7]=descendencia[8])||(descendencia[1]!=descendencia[2])||(descendencia[3]<descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]<descendencia[6])){ 
+        descendencia <- parental_1
+      }
+    }else if (escenario==3){
+      if ((descendencia[7]>=descendencia[8])||(descendencia[1]!=descendencia[2])||(descendencia[3]!=descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]<descendencia[6])){ 
+        descendencia <- parental_1
+      }
+    }else if (escenario==4){
+      if ((descendencia[7]!=descendencia[8])||(descendencia[1]!=descendencia[2])||(descendencia[3]!=descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]<descendencia[6])){ 
+        descendencia <- parental_1
+      }
+    }else if (escenario==5){
+      if ((descendencia[7]>=descendencia[8])||(descendencia[1]!=descendencia[2])||(descendencia[3]!=descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]!=descendencia[6])){ 
+        descendencia <- parental_1
+      }
+    }else {
+      if ((descendencia[7]!=descendencia[8])||(descendencia[1]!=descendencia[2])||(descendencia[3]!=descendencia[4])||(descendencia[1]<=descendencia[3])||(descendencia[2]<=descendencia[4])||(descendencia[5]!=descendencia[6])){ 
+        descendencia <- parental_1
+      }
     }
     
+    #### Método de cruzamiento por punto simple
     
     } else {
     punto_cruce <- sample(
