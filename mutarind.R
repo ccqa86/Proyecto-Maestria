@@ -78,32 +78,32 @@ mutar_individuo <- function(individuo, limite_inf, limite_sup,
   
   if (escenario==1){
     #Escenario 1 VP
-    if ((individuo[7]>=individuo[8])||(individuo[1]<=individuo[2])||(individuo[3]<individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]<individuo[6])){ 
+    if ((individuo[7]>=individuo[8])||(individuo[1]<=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]<individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]<individuo[6])){ 
       individuo <- individuo1
     }
   }else if (escenario==2){
     #Escenario 2 VSSIWL k1=k2
-    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[2])||(individuo[3]<individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]<individuo[6])){ 
+    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]<individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]<individuo[6])){ 
       individuo <- individuo1
     }
   }else if (escenario==3){
     #Escenario 3 VSSI k1=k2, w1=w2
-    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[2])||(individuo[3]!=individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]<individuo[6])){ 
+    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]!=individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]<individuo[6])){ 
       individuo <- individuo1
     }
   }else if (escenario==4){
     #Escenario 4 VSI k1=k2, w1=w2, n1=n2
-    if ((individuo[7]!=individuo[8])||(individuo[1]!=individuo[2])||(individuo[3]!=individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]<individuo[6])){ 
+    if ((individuo[7]!=individuo[8])||(individuo[1]!=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]!=individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]<individuo[6])){ 
       individuo <- individuo1
     }
   }else if (escenario==5){
     #Escenario 5 VSS k1=k2, w1=w2, h1=h2
-    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[2])||(individuo[3]!=individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]!=individuo[6])){ 
+    if ((individuo[7]>=individuo[8])||(individuo[1]!=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]!=individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]!=individuo[6])){ 
       individuo <- individuo1
     }
   }else {
     #Escenario 6 x tradicional k1=k2, w1=w2, h1=h2, n1=n2
-    if ((individuo[7]!=individuo[8])||(individuo[1]!=individuo[2])||(individuo[3]!=individuo[4])||(individuo[1]<=individuo[3])||(individuo[2]<=individuo[4])||(individuo[5]!=individuo[6])){ 
+    if ((individuo[7]!=individuo[8])||(individuo[1]!=individuo[3])||(individuo[2]<individuo[3])||(individuo[2]!=individuo[4])||(individuo[1]<=individuo[2])||(individuo[3]<=individuo[4])||(individuo[5]!=individuo[6])){ 
       individuo <- individuo1
     }
   }
