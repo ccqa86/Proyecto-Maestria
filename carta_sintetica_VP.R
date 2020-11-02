@@ -60,6 +60,8 @@ phi_1<-c(0.2, 0.4, 0.6, 0.8, 0.99)
 delta_1<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
 #delta<-c(0.1, 0.3, 0.5, 0.6, 0.8, 1.0)
 
+#escenario<-1
+
 for (escenario in (1:6)){
  escenario_name=c("VP","VSSIWL","VSSI","VSI","VSS","X")
 for (aa in 1:length(psi_1)){
@@ -75,7 +77,7 @@ for (aa in 1:length(psi_1)){
       #  return (list(psi_1, phi_1, delta_1))
       #}
       
-      funcion <- function(k1, k2, w1, w2, h1, h2, n1, n2, m){
+      funcion <- function(k1, w1, k2, w2, h1, h2, n1, n2, m){
         #valores<-funcion_par()
         #psi=unlist(valores[1])
         #phi=unlist(valores[2])
@@ -202,7 +204,7 @@ for (aa in 1:length(psi_1)){
 n_poblacion <- 300
 n_variables <- 9
 limite_inf <- c(miu+0.1,miu+0.1,miu+0.1,miu+0.1,miu+0.1,miu+0.1,as.integer(1),as.integer(1),as.integer(1))
-limite_sup <- c(miu+4*des,(miu+4*des)*0.8,miu+4*des,(miu+4*des)*0.8,20,10,as.integer(nmax),as.integer(nmax),as.integer(30))
+limite_sup <- c(miu+4*des,miu+4*des,(miu+4*des)*0.8,(miu+4*des)*0.8,20,10,as.integer(nmax),as.integer(nmax),as.integer(30))
 n_generaciones <- 75
 
 results <- optimizar_ga(funcion_objetivo = funcion, n_variables = n_variables, nmax, miu, escenario, des, 
@@ -233,8 +235,8 @@ tabla=data.frame(carta=escenario_name[escenario], psi=psi, phi=phi, delta=delta,
                  n1=unlist(results$mejor_individuo_global[7]), 
                  n2=unlist(results$mejor_individuo_global[8]), 
                  k1=unlist(results$mejor_individuo_global[1]),
-                 k2=unlist(results$mejor_individuo_global[2]),
-                 w1=unlist(results$mejor_individuo_global[3]), 
+                 k2=unlist(results$mejor_individuo_global[3]),
+                 w1=unlist(results$mejor_individuo_global[2]), 
                  w2=unlist(results$mejor_individuo_global[4]),
                  m=unlist(results$mejor_individuo_global[9]), 
                  ATS1=unlist(results$mejor_valor_global))
@@ -245,8 +247,8 @@ tabla=data.frame(carta=escenario_name[escenario], psi=psi, phi=phi, delta=delta,
                                n1=unlist(results$mejor_individuo_global[7]), 
                                n2=unlist(results$mejor_individuo_global[8]), 
                                k1=unlist(results$mejor_individuo_global[1]),
-                               k2=unlist(results$mejor_individuo_global[2]),
-                               w1=unlist(results$mejor_individuo_global[3]), 
+                               k2=unlist(results$mejor_individuo_global[3]),
+                               w1=unlist(results$mejor_individuo_global[2]), 
                                w2=unlist(results$mejor_individuo_global[4]),
                                m=unlist(results$mejor_individuo_global[9]), 
                                ATS1=unlist(results$mejor_valor_global)))
