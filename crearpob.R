@@ -97,8 +97,8 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
         # para cada variable.
         individuo[1] <- runif(1, min=miu, max=miu+4*des)
         individuo[2] <- runif(1, min=miu, max=individuo[1])
-        individuo[3] <- runif(1, min=miu, max=individuo[1])
-        individuo[4] <- runif(1, min=miu, max=individuo[2])
+        individuo[3] <- runif(1, min=miu, max=individuo[2])
+        individuo[4] <- runif(1, min=miu, max=individuo[3])
         individuo[5] <- runif(1, min=0.1, max=20)
         individuo[6] <- runif(1, min=0.1, max=individuo[5])
         individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
@@ -111,9 +111,9 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
         # Para cada posición, se genera un valor aleatorio dentro del rango permitido
         # para cada variable.
         individuo[1] <- runif(1, min=miu, max=miu+4*des)
-        individuo[2] <- individuo[1]
-        individuo[3] <- runif(1, min=miu, max=individuo[1])
-        individuo[4] <- runif(1, min=miu, max=individuo[2])
+        individuo[2] <- runif(1, min=miu, max=individuo[1])
+        individuo[3] <- individuo[1]
+        individuo[4] <- runif(1, min=miu, max=individuo[3])
         individuo[5] <- runif(1, min=0.1, max=20)
         individuo[6] <- runif(1, min=0.1, max=individuo[5])
         individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
@@ -126,9 +126,9 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
         # Para cada posición, se genera un valor aleatorio dentro del rango permitido
         # para cada variable.
         individuo[1] <- runif(1, min=miu, max=miu+4*des)
-        individuo[2] <- individuo[1]
-        individuo[3] <- runif(1, min=miu, max=individuo[1])
-        individuo[4] <- individuo[3]
+        individuo[2] <- runif(1, min=miu, max=individuo[1])
+        individuo[3] <- individuo[1]
+        individuo[4] <- individuo[2]
         individuo[5] <- runif(1, min=0.1, max=20)
         individuo[6] <- runif(1, min=0.1, max=individuo[5])
         individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
@@ -140,9 +140,9 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
         # Para cada posición, se genera un valor aleatorio dentro del rango permitido
         # para cada variable.
         individuo[1] <- runif(1, min=miu, max=miu+4*des)
-        individuo[2] <- individuo[1]
-        individuo[3] <- runif(1, min=miu, max=individuo[1])
-        individuo[4] <- individuo[3]
+        individuo[2] <- runif(1, min=miu, max=individuo[1])
+        individuo[3] <- individuo[1]
+        individuo[4] <- individuo[2]
         individuo[5] <- runif(1, min=0.1, max=20)
         individuo[6] <- runif(1, min=0.1, max=individuo[5])
         individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
@@ -154,9 +154,9 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
         # Para cada posición, se genera un valor aleatorio dentro del rango permitido
         # para cada variable.
         individuo[1] <- runif(1, min=miu, max=miu+4*des)
-        individuo[2] <- individuo[1]
-        individuo[3] <- runif(1, min=miu, max=individuo[1])
-        individuo[4] <- individuo[3]
+        individuo[2] <- runif(1, min=miu, max=individuo[1])
+        individuo[3] <- individuo[1]
+        individuo[4] <- individuo[2]
         individuo[5] <- runif(1, min=0.1, max=20)
         individuo[6] <- individuo[5]
         individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
@@ -168,9 +168,9 @@ crear_poblacion <- function(n_poblacion, n_variables, nmax,miu,escenario,des, li
       # Para cada posición, se genera un valor aleatorio dentro del rango permitido
       # para cada variable.
       individuo[1] <- runif(1, min=miu, max=miu+4*des)
-      individuo[2] <- individuo[1]
-      individuo[3] <- runif(1, min=miu, max=individuo[1])
-      individuo[4] <- individuo[3]
+      individuo[2] <- runif(1, min=miu, max=individuo[1])
+      individuo[3] <- individuo[1]
+      individuo[4] <- individuo[2]
       individuo[5] <- runif(1, min=0.1, max=20)
       individuo[6] <- individuo[5]
       individuo[7] <- as.integer(runif(1, min=1, max=nmax-1))
